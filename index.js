@@ -1,42 +1,52 @@
-var fn = function () { return 'hello'; };
-var a;
-a = 10;
-// 数组的定义
-{
-    var array = ['', '132'];
-    // 第二种方式是使用数组泛型
-    var array1 = [1, 2, 3];
-}
-// 元组的定义
-{
-    var a_1 = ['12', 23];
-    console.log(a_1[0], a_1[1]);
-}
-/**
- * 枚举:
- * 使用枚举类型可以为一组数值赋予友好的名字。
- * 枚举类型提供的一个便利是你可以由枚举的值得到它的名字
- */
-{
-    var Color = void 0;
-    (function (Color) {
-        Color[Color["Class1"] = 1] = "Class1";
-        Color[Color["Class2"] = 3] = "Class2";
-    })(Color || (Color = {}));
-    var a_2 = Color[1]; // 根据一个数值得到名字
-    console.log(a_2);
-    var b = Color.Class1; // 获取的是一个数值
-    console.log(b);
-}
-// 重复声明变量时，必须是同类型
-// var a:string = ''
-// 也可以使用let和const
-/**
- * let 有块作用域限制  不能重复定义
- */
-for (var index = 0; index < 10; index++) {
-    // console.log(index)
-}
-// 无法访问index,有作用域限制
-// console.log(index)
 // 函数
+// 规定参数的类型，返回值类型
+function add(a, b) {
+    return a + b;
+}
+// 声明变量的方式
+var add1 = function (a, b) {
+    return a + b;
+};
+// 箭头函数的方式
+var add2 = function (a, b) {
+    return a + b;
+};
+// 指定无返回值
+var add3 = function (a, b) {
+    console.log((a + b).toFixed(2)); // toFixed保留两位小数
+};
+add(1, 2);
+// 以下代码会报错
+// add(1, '')
+// add(1)
+/**
+ * 默认值(=)
+ * 有默认值的参数可以不指定类型，会自动指定类型
+ * 注意：一般带有默认值的参数要放到参数列表的最后
+ */
+var add4 = function (a, b) {
+    if (b === void 0) { b = 12; }
+    return a + b;
+};
+add4(2);
+// 注意：带有默认值的参数会自动指定了参数类型，下面代码会报错
+// add4(2, '')
+/**
+ * 可选值(?)
+ * 注意：一般可选的参数也要放到参数列表的最后
+ */
+var add5 = function (a, b) {
+    return a + (b || 0);
+};
+console.log(add5(12));
+/**
+ * 剩余参数
+ */
+var add6 = function (a, b) {
+    var rests = [];
+    for (var _i = 2; _i < arguments.length; _i++) {
+        rests[_i - 2] = arguments[_i];
+    }
+    return a + b + rests[0];
+};
+console.log('add6', add6(1, 2, 3, 4, 5));
