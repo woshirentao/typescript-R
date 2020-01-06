@@ -48,8 +48,7 @@ console.log(add5(12))
 /**
  * 剩余参数
  */
-let add6 = 
-function(a: number, b: number, ...rests: number[]): number {
+let add6 = function(a: number, b: number, ...rests: number[]): number {
   return a + b + rests[0]
 }
 console.log('add6', add6(1,2,3,4,5))
