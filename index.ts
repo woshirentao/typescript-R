@@ -52,3 +52,11 @@ let add6 = function(a: number, b: number, ...rests: number[]): number {
   return a + b + rests[0]
 }
 console.log('add6', add6(1,2,3,4,5))
+
+/**
+ * 多种可选类型、联合类型(|)
+ */
+let add7 = function(value: number|string) {
+  return value
+}
+console.log('add7', add7('我是任涛'))

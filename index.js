@@ -50,3 +50,10 @@ var add6 = function (a, b) {
     return a + b + rests[0];
 };
 console.log('add6', add6(1, 2, 3, 4, 5));
+/**
+ * 多种可选类型、联合类型(|)
+ */
+var add7 = function (value) {
+    return value;
+};
+console.log('add7', add7('我是任涛'));
