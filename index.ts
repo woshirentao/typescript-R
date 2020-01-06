@@ -14,3 +14,5 @@ aPerson.lastName = '涛'
 // aPerson.name = '123'
 // 类型限制
 // aPerson.firstName = 123
+
+// 方法定义
