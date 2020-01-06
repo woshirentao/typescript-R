@@ -28,6 +28,15 @@ a = 10;
     var b = Color.Class1; // 获取的是一个数值
     console.log(b);
 }
+// any：任意类型
+{
+    var a_3 = '';
+    a_3 = 10;
+    console.log(a_3);
+    // 可以使用any定义一个元素类型不确定的数组
+    var list = [1, true, "free"];
+    list[1] = 100;
+}
 // 重复声明变量时，必须是同类型
 // var a:string = ''
 // 也可以使用let和const
