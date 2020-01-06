@@ -25,6 +25,7 @@ a = 10
   let b: Color = Color.Class1  // 获取的是一个数值
   console.log(b)
 }
+
 // 重复声明变量时，必须是同类型
 // var a:string = ''
 
@@ -37,4 +38,7 @@ for (let index = 0; index < 10; index++) {
 }
 // 无法访问index,有作用域限制
 // console.log(index)
+
+
+// 函数
 

@@ -39,3 +39,4 @@ for (var index = 0; index < 10; index++) {
 }
 // 无法访问index,有作用域限制
 // console.log(index)
+// 函数
