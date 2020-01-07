@@ -15,11 +15,15 @@ a = 10
 }
 /**
  * 枚举: 
+ * 提高代码可读性
  * 使用枚举类型可以为一组数值赋予友好的名字。
  * 枚举类型提供的一个便利是你可以由枚举的值得到它的名字
  */
 {
-  enum Color { Class1 = 1, Class2 = 3 }
+  enum Color { 
+    Class1 = 1, 
+    Class2 = 3 
+  }
   let a: string = Color[1] // 根据一个数值得到名字
   console.log(a)
   let b: Color = Color.Class1  // 获取的是一个数值
@@ -64,7 +68,6 @@ a = 10
   }
   strictNullChecks(null)
 }
-
 
 // 重复声明变量时，必须是同类型
 // var a:string = ''
