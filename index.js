@@ -2,9 +2,9 @@
  * 接口：类型检查器
  * 对值所具有的结构进行类型检查,对得上才行
  * 规定格式规范
+ * 与类型别名type不同，接口可以重复声明，会合并在一起
  */
 function checkPerson(o) {
-    // console.log(o.name);
     o.print(o.name);
 }
 checkPerson({
@@ -24,6 +24,7 @@ var Persons = /** @class */ (function () {
     return Persons;
 }());
 checkPerson(new Persons());
-//  let a:Person = {
+// 使用接口类型
+//  let a: Person = {
 //    name: ''
 //  }
