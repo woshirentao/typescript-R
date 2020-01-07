@@ -56,7 +56,7 @@ var aRT = new Rentao("任");
  * 成员都默认为 public
  *
  * public：任何属性和方法都可以被调用；子类中也可以访问；
- * private：私有的，只能在类中访问，子类中能继承但无法使用
+ * private：私有的，只能在本类中访问，子类中能继承但无法使用
  * protected: 受保护的，只能在本类和子类中使用，子类中能继承
  */
 var Mine = /** @class */ (function () {
@@ -116,6 +116,21 @@ var Employee = /** @class */ (function (_super) {
 var howard = new Employee("Howard", "Sales");
 // let john = new PersonItem("John"); // 错误: 'Person' 的构造函数是被保护的.
 /**
+ * 参数属性
+ * 通过给构造函数参数前面添加一个访问限定符来声明
+ * 这样会声明并初始化一个成员
+ */
+var Room = /** @class */ (function () {
+    function Room(age, name) {
+        this.age = age;
+        this.name = name;
+        this.age = age;
+    }
+    return Room;
+}());
+var room = new Room(34, '小明');
+console.log(room);
+/**
  * 存取器
  * 通过getters/setters来截取对对象成员的访问
  * 注意：存取器要求你将编译器设置为输出ECMAScript 5或更高
@@ -145,5 +160,20 @@ var Employee1 = /** @class */ (function () {
 var employee = new Employee1();
 employee.fullName = "Bob Smith";
 if (employee.fullName) {
-    alert(employee.fullName);
+    console.log(employee.fullName);
 }
+/**
+ * 静态属性
+ * 这些属性存在于类本身上面而不是类的实例上
+ */
+var Doom = /** @class */ (function () {
+    function Doom() {
+    }
+    Doom.getDoomName = function () {
+        return this.doomName;
+    };
+    Doom.doomName = '123';
+    return Doom;
+}());
+console.log(Doom.doomName);
+console.log(Doom.getDoomName());
