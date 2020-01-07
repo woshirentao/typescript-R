@@ -13,6 +13,18 @@ a = 10
   let a: [string, number] = ['12',23]
   console.log(a[0], a[1])
 }
+// Object
+{
+  let object: { name: string, age?: number } = {
+    name: ''
+  }
+  // 类型别名--------和接口（interface）很像
+  type nameObj = { name: string, age: number }
+  let obj: nameObj = {
+    name: '123',
+    age: 12
+  }
+}
 /**
  * 枚举: 
  * 提高代码可读性

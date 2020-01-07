@@ -12,6 +12,16 @@ a = 10;
     var a_1 = ['12', 23];
     console.log(a_1[0], a_1[1]);
 }
+// Object
+{
+    var object = {
+        name: ''
+    };
+    var obj = {
+        name: '123',
+        age: 12
+    };
+}
 /**
  * 枚举:
  * 提高代码可读性
