@@ -85,7 +85,7 @@ let obj = {
     //   let area = this.w * this.h // 此时this指向window
     //   console.log(area)
     // }
-    //解决办法一：返回箭头函数,箭头函数能保存函数创建时的 this值，而不是调用时的值,默认情况下，编译器不会指出this的指向问题，给编译器设置了--noImplicitThis标记，会指出this的问题
+    //解决办法：返回箭头函数,箭头函数能保存函数创建时的 this值，而不是调用时的值,默认情况下，编译器不会指出this的指向问题，给编译器设置了--noImplicitThis标记，会指出this的问题
     return ()=>{
       let area = this.w * this.h // 此时this指向window
       console.log(area)
@@ -93,7 +93,7 @@ let obj = {
   }
 }
 let areaFunc = obj.getArea()
-let area = areaFunc() // 由window调用
+let area = areaFunc()
 
 
 /**
@@ -103,6 +103,10 @@ let area = areaFunc() // 由window调用
 let suits = ["hearts", "spades", "clubs", "diamonds"];
 function pickCard(x: {suit: string; card: number; }[]): number;
 function pickCard(x: number): {suit: string; card: number; };
+/**
+ * 注意：这个函数并不是重载列表的一部分
+ * 只有参数列表和返回值符合的调用才是有效的，以其它参数调用 pickCard会产生错误
+ */
 function pickCard(x): any {
   if (typeof x == "object") {
       let pickedCard = Math.floor(Math.random() * x.length);

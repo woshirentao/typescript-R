@@ -95,6 +95,10 @@ var area = areaFunc(); // 由window调用
  * 允许用相同的名字创建参数不同的函数
  */
 var suits = ["hearts", "spades", "clubs", "diamonds"];
+/**
+ * 注意：这个函数并不是重载列表的一部分
+ * 只有参数列表和返回值符合的调用才是有效的，以其它参数调用 pickCard会产生错误
+ */
 function pickCard(x) {
     if (typeof x == "object") {
         var pickedCard = Math.floor(Math.random() * x.length);
