@@ -93,3 +93,16 @@ for (let index = 0; index < 10; index++) {
 }
 // 无法访问index,有作用域限制
 // console.log(index)
+
+
+
+
+/**
+ * 断言：类似于其他语言中类型转换的用法，但是并不会转换类型，只是告诉编译器这个变量的类型是什么
+ * 它没有运行时的影响，只是在编译阶段起作用
+ * 有两种形式：<>和as
+ */
+let string: any = '23'
+let num: number = (<string>string).length
+let num1: number = (string as string).length
+console.log(num)
