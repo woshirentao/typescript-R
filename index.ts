@@ -81,8 +81,8 @@ m.getTel1()
 
 /**
  * 构造函数也可以被标记成 protected 或者 private，这意味着这个类不能被实例化
- * protected能被继承
- * private不能被继承
+ * protected标记的构造函数，表示此类能被继承
+ * private标记的构造函数，表示此类不能被继承
  */
 class PersonItem {
   protected name: string;
@@ -115,7 +115,6 @@ class Room {
   private name: string
   constructor(protected age: number, name: string) {
     this.name = name
-    this.age = age
   }
 
 }
@@ -130,7 +129,7 @@ console.log(room)
 let passcode = "secret passcode";
 
 class Employee1 {
-  _fullName: string
+  private _fullName: string
   get fullName(): string {
     return this._fullName
   }
@@ -139,14 +138,15 @@ class Employee1 {
       this._fullName = newName;
     }
     else {
-        console.log("Error: Unauthorized update of employee!");
+      console.log("Error: Unauthorized update of employee!");
     }
   }
 }
-let employee = new Employee1();
-employee.fullName = "Bob Smith";
-if (employee.fullName) {
-  console.log(employee.fullName);
+let employee1 = new Employee1();
+employee1.fullName = "Bob Smith";
+console.log(employee1)
+if (employee1.fullName) {
+  console.log(employee1.fullName);
 }
 
 /**
@@ -161,3 +161,31 @@ class Doom {
 }
 console.log(Doom.doomName)
 console.log(Doom.getDoomName())
+
+/**
+ * 抽象类:
+ * 抽象类做为其它派生类的基类使用。它们不可以被实例化。 
+ * 不同于接口，抽象类可以包含成员的实现细节。
+ * 抽象方法的语法与接口方法相似，但是，抽象方法必须包含 abstract关键字并且可以包含访问修饰符（除private）
+ */
+abstract class Animal {
+  name: string
+  age: number 
+  protected abstract greet(name?: string): void // 抽象方法必须在子类中实现
+  abstract height: string // 抽象属性，用的少
+  printName(): void {
+    console.log('Animal name: ' + this.name);
+  }
+}
+// let ani: Animal = new Animal() // 无法被实例化
+
+class Dog extends Animal {
+  height: string
+  greet(name?: string): void { // 实现抽象方法
+    console.log(name || this.name)
+  }
+}
+let dog: Dog = new Dog()
+dog.name = '小黄狗'
+dog.greet()
+dog.printName()

@@ -91,8 +91,8 @@ var m = new M();
 m.getTel1();
 /**
  * 构造函数也可以被标记成 protected 或者 private，这意味着这个类不能被实例化
- * protected能被继承
- * private不能被继承
+ * protected标记的构造函数，表示此类能被继承
+ * private标记的构造函数，表示此类不能被继承
  */
 var PersonItem = /** @class */ (function () {
     function PersonItem(theName) {
@@ -124,7 +124,6 @@ var Room = /** @class */ (function () {
     function Room(age, name) {
         this.age = age;
         this.name = name;
-        this.age = age;
     }
     return Room;
 }());
@@ -157,10 +156,11 @@ var Employee1 = /** @class */ (function () {
     });
     return Employee1;
 }());
-var employee = new Employee1();
-employee.fullName = "Bob Smith";
-if (employee.fullName) {
-    console.log(employee.fullName);
+var employee1 = new Employee1();
+employee1.fullName = "Bob Smith";
+console.log(employee1);
+if (employee1.fullName) {
+    console.log(employee1.fullName);
 }
 /**
  * 静态属性
@@ -177,3 +177,32 @@ var Doom = /** @class */ (function () {
 }());
 console.log(Doom.doomName);
 console.log(Doom.getDoomName());
+/**
+ * 抽象类:
+ * 抽象类做为其它派生类的基类使用。它们不可以被实例化。
+ * 不同于接口，抽象类可以包含成员的实现细节。
+ * 抽象方法的语法与接口方法相似，但是，抽象方法必须包含 abstract关键字并且可以包含访问修饰符（除private）
+ */
+var Animal = /** @class */ (function () {
+    function Animal() {
+    }
+    Animal.prototype.printName = function () {
+        console.log('Animal name: ' + this.name);
+    };
+    return Animal;
+}());
+// let ani: Animal = new Animal() // 无法被实例化
+var Dog = /** @class */ (function (_super) {
+    __extends(Dog, _super);
+    function Dog() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Dog.prototype.greet = function (name) {
+        console.log(name || this.name);
+    };
+    return Dog;
+}(Animal));
+var dog = new Dog();
+dog.name = '小黄狗';
+dog.greet();
+dog.printName();
