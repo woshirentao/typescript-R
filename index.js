@@ -58,6 +58,60 @@ var add7 = function (value) {
 };
 console.log('add7', add7('我是任涛'));
 /**
+ *
+ */
+var Car = /** @class */ (function () {
+    function Car() {
+    }
+    Car.prototype.drive = function () {
+        console.log('正在开车');
+    };
+    return Car;
+}());
+var Bike = /** @class */ (function () {
+    function Bike() {
+    }
+    Bike.prototype.ride = function () {
+        console.log('正在骑车');
+    };
+    return Bike;
+}());
+// function driveOrRide(ver: Car | Bike) {
+//   if (ver.drive) {
+//     // ver.drive()  // 会编译报错，判断不出ver的类型
+//   }
+//   if ((ver as Bike).ride) { // 解决的第一种方法:断言
+//     (ver as Bike).ride()
+//   }
+// }
+/**
+ * 第二种方式：用户自定义的类型保护
+ */
+// 类型保护就是一些表达式，它们会在运行时检查以确保在某个作用域里的类型
+function isFish(ver) {
+    return ver.drive !== undefined;
+}
+// function driveOrRide(ver: Car | Bike) {
+//   if (isFish(ver)) {
+//     ver.drive()
+//   }else {
+//     ver.ride()
+//   }
+// }
+/**
+ * 第三种方式: instanceof类型保护
+ * 最简便的方式，推荐使用
+ */
+function driveOrRide(ver) {
+    if (ver instanceof Car) {
+        ver.drive();
+    }
+    else {
+        ver.ride();
+    }
+}
+driveOrRide(new Bike());
+/**
  * 函数类型的定义方式:
  * 1、any
  * 2、Function
@@ -81,7 +135,7 @@ var obj = {
         //   let area = this.w * this.h // 此时this指向window
         //   console.log(area)
         // }
-        //解决办法一：返回箭头函数,箭头函数能保存函数创建时的 this值，而不是调用时的值,默认情况下，编译器不会指出this的指向问题，给编译器设置了--noImplicitThis标记，会指出this的问题
+        //解决办法：返回箭头函数,箭头函数能保存函数创建时的 this值，而不是调用时的值,默认情况下，编译器不会指出this的指向问题，给编译器设置了--noImplicitThis标记，会指出this的问题
         return function () {
             var area = _this.w * _this.h; // 此时this指向window
             console.log(area);
@@ -89,7 +143,7 @@ var obj = {
     }
 };
 var areaFunc = obj.getArea();
-var area = areaFunc(); // 由window调用
+var area = areaFunc();
 /**
  * 函数重载：
  * 允许用相同的名字创建参数不同的函数
