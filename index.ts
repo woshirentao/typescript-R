@@ -85,6 +85,7 @@ a = 10
 /**
  * never类型: 表示的是那些永不存在的值的类型，如无限循环、抛出异常
  * never类型是任何类型的子类型，也可以赋值给任何类型
+ * 注意：没有类型是never的子类型或可以赋值给never类型
  */
 // function error(message: string): never {
 //   throw new Error(message);
@@ -131,3 +132,36 @@ console.log(num)
  }
 
 //  f(null) //不能传入null
+
+/**
+ * 可辨识联合（Discriminated Unions）
+ * 
+ */
+interface Square {
+  kind: "square";
+  size: number;
+}
+interface Rectangle {
+  kind: "rectangle";
+  width: number;
+  height: number;
+}
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+type Shape = Square | Rectangle | Circle;
+
+function assertNever(x: never): never {
+  console.log(x)
+  throw new Error("Unexpected object: " + x);
+}
+function area(s: Shape) {
+  switch (s.kind) {
+      case "square": return s.size * s.size;
+      case "rectangle": return s.height * s.width;
+      case "circle": return Math.PI * s.radius ** 2;
+      default: return assertNever(s);
+  }
+}
+
