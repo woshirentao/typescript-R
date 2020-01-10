@@ -59,7 +59,7 @@ a = 10;
     function warnUser() {
         console.log("This is my warning message");
     }
-    var emptyValue = null;
+    // let emptyValue: void = null
 }
 // null和undefined
 /**
@@ -78,6 +78,14 @@ a = 10;
     }
     strictNullChecks(null);
 }
+/**
+ * never类型: 表示的是那些永不存在的值的类型，如无限循环、抛出异常
+ * never类型是任何类型的子类型，也可以赋值给任何类型
+ */
+// function error(message: string): never {
+//   throw new Error(message);
+// }
+// error('报错信息')
 // 重复声明变量时，必须是同类型
 // var a:string = ''
 // 也可以使用let和const
@@ -98,3 +106,16 @@ var string = '23';
 var num = string.length;
 var num1 = string.length;
 console.log(num);
+/**
+ * 高级类型
+ */
+/**
+ * 可以为null的类型：默认情况下null和undefined可以赋值给任何类型的变量
+ * --strictNullChecks标记可以进行严格的null检查：当你声明一个变量时，它不会自动地包含 null或 undefined
+ * 注意：使用了 --strictNullChecks，可选参数会被自动地加上 | undefined
+ * 加 !后缀可以将一个变量的空值类型去掉
+ */
+function f(x, y) {
+    return x + (y || 0);
+}
+//  f(null) //不能传入null
