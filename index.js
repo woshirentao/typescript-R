@@ -99,7 +99,7 @@ function isFish(ver) {
 //   }
 // }
 /**
- * 第三种方式: instanceof类型保护
+ * 第三种方式: instanceof类型保护 或者 typeof类型保护
  * 最简便的方式，推荐使用
  */
 function driveOrRide(ver) {
