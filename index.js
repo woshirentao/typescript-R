@@ -1,3 +1,4 @@
+"use strict";
 var fn = function () { return 'hello'; };
 var a;
 a = 10;
