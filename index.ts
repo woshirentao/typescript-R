@@ -55,3 +55,31 @@ class Person<T, U> {
 }
 
 let person = new Person<string, number>('rentao', 23)
+
+// 泛型约束
+interface Lengthwise {
+  length: number;
+}
+// extends 在这里不是继承，而是用来 约束 泛型T的类型
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+  console.log(arg)
+  return arg
+}
+loggingIdentity({
+  length: 12
+})
+
+// 泛型中使用类类型
+class Animal {
+  age: number
+}
+class Dog extends Animal {
+  // constructor(age: number) { // 带有参数，error：类型“typeof Dog”的参数不能赋给类型“new () => Dog”的参数
+  //   super()
+  // }
+}
+// new ()=> T : 代表一个具有 无参 构造函数 的 类类型
+function createInstance<T extends Animal>(t: new ()=> T): T {
+  return new t()
+}
+let dog: Dog = createInstance(Dog)
