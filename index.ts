@@ -65,58 +65,6 @@ let add7 = function(value: number|string) {
 console.log('add7', add7('我是任涛'))
 
 /**
- * 
- */
-class Car {
-  drive() {
-    console.log('正在开车')
-  }
-}
-class Bike {
-  ride() {
-    console.log('正在骑车')
-  }
-}
-// function driveOrRide(ver: Car | Bike) {
-//   if (ver.drive) {
-//     // ver.drive()  // 会编译报错，判断不出ver的类型
-//   }
-//   if ((ver as Bike).ride) { // 解决的第一种方法:断言
-//     (ver as Bike).ride()
-//   }
-// }
-
-/**
- * 第二种方式：用户自定义的类型保护
- */
-// 类型保护就是一些表达式，它们会在运行时检查以确保在某个作用域里的类型
-function isFish(ver: Car|Bike): ver is Car {
-  return (<Car>ver).drive !== undefined;
-}
-
-// function driveOrRide(ver: Car | Bike) {
-//   if (isFish(ver)) {
-//     ver.drive()
-//   }else {
-//     ver.ride()
-//   }
-// }
-/**
- * 第三种方式: instanceof类型保护 或者 typeof类型保护
- * 最简便的方式，推荐使用
- */
-function driveOrRide(ver: Car | Bike) {
-  if (ver instanceof Car) {
-    ver.drive()
-  }else {
-    ver.ride()
-  }
-}
-driveOrRide(new Bike())
-
-
-
-/**
  * 函数的定义方式:
  * 1、any
  * 2、Function
