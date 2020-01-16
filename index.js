@@ -36,7 +36,6 @@ var aaPerson = new Person("小花");
 /**
  * 继承：类从基类中继承了属性和方法
  * 派生类通常被称作 子类，基类通常被称作 超类
- * 多态
  */
 var Rentao = /** @class */ (function (_super) {
     __extends(Rentao, _super);
@@ -56,8 +55,8 @@ var aRT = new Rentao("任");
  * 成员都默认为 public
  *
  * public：任何属性和方法都可以被调用；子类中也可以访问；
- * private：私有的，只能在本类中访问，子类中能继承但无法使用
- * protected: 受保护的，只能在本类和子类中使用，子类中能继承
+ * private：私有的，实例不能调用，只能在本类中访问，子类中能继承但无法使用
+ * protected: 受保护的，实例不能调用，只能在本类和子类中使用，子类中能继承
  */
 var Mine = /** @class */ (function () {
     function Mine() {
@@ -91,8 +90,8 @@ var m = new M();
 m.getTel1();
 /**
  * 构造函数也可以被标记成 protected 或者 private，这意味着这个类不能被实例化
- * protected标记的构造函数，表示此类能被继承
- * private标记的构造函数，表示此类不能被继承
+ * protected标记的构造函数，表示此类不能被实例化，只能被继承
+ * private标记的构造函数，表示此类既不能被实例化，也不能被继承
  */
 var PersonItem = /** @class */ (function () {
     function PersonItem(theName) {
@@ -118,7 +117,7 @@ var howard = new Employee("Howard", "Sales");
 /**
  * 参数属性
  * 通过给构造函数参数前面添加一个访问限定符来声明
- * 这样会声明并初始化一个成员
+ * 这样会声明并初始化一个成员，不用再单独创建属性
  */
 var Room = /** @class */ (function () {
     function Room(age, name) {
@@ -165,6 +164,7 @@ if (employee1.fullName) {
 /**
  * 静态属性
  * 这些属性存在于类本身上面而不是类的实例上
+ * 可以被继承
  */
 var Doom = /** @class */ (function () {
     function Doom() {
@@ -179,9 +179,10 @@ console.log(Doom.doomName);
 console.log(Doom.getDoomName());
 /**
  * 抽象类:
- * 抽象类做为其它派生类的基类使用。它们不可以被实例化。
+ * 抽象类做为其它派生类的基类使用。它们不能被实例化。，只能被继承
  * 不同于接口，抽象类可以包含成员的实现细节。
  * 抽象方法的语法与接口方法相似，但是，抽象方法必须包含 abstract关键字并且可以包含访问修饰符（除private）
+ * 使用抽象类可以实现类的多态
  */
 var Animal = /** @class */ (function () {
     function Animal() {
@@ -197,12 +198,24 @@ var Dog = /** @class */ (function (_super) {
     function Dog() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Dog.prototype.greet = function (name) {
-        console.log(name || this.name);
+    Dog.prototype.greet = function () {
+        console.log('狗在打招呼');
     };
     return Dog;
 }(Animal));
+var Cat = /** @class */ (function (_super) {
+    __extends(Cat, _super);
+    function Cat() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Cat.prototype.greet = function () {
+        console.log('猫在打招呼');
+    };
+    return Cat;
+}(Animal));
 var dog = new Dog();
-dog.name = '小黄狗';
-dog.greet();
-dog.printName();
+var cat = new Cat();
+var animais = [dog, cat];
+animais.forEach(function (animal) {
+    animal.greet();
+});
