@@ -41,7 +41,7 @@
 
 /**
  * 类实现接口:
- * 需要实现接口中的所有属性和方法
+ * 需要实现接口中的所有属性和方法，且必须是共有的
  */
 class Rentao implements Person {
   name: string = '类实现了接口'
@@ -110,19 +110,15 @@ let shape: Square = {
   height: 12,
   color: 'red'
 }
-// 类实现接口
-class ShapeClass implements Square {
-  width: number
-  height: number
-  color: string
-}
+
 /**
  * 接口继承类
- * 当接口继承了一个类时，它会继承类的成员但不包括其实现。
+ * 当接口继承了一个类时，它会继承类的成员，其中也包括私有的和受保护的成员，但不包括其实现。
  */ 
 class Components {
   width: number
   height: number
+  private color: number
   display(): void {
 
   }
@@ -131,15 +127,14 @@ class Components {
 interface Button extends Components {
 
 }
-
-let button: Button = {
-  width: 0,
-  height: 0,
-  display(): void {
-    console.log('displaying')
-  }
-}
-button.display()
+// 以下代码报错，不能带有私有成员
+// let button: Button = {
+//   width: 0,
+//   height: 0,
+//   display(): void {
+//     console.log('displaying')
+//   }
+// }
 
 /**
  * 可索引的类型:
