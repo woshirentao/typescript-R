@@ -1,15 +1,15 @@
 // 函数
-// 规定参数的类型，返回值类型
+// 规定参数的类型，返回值类型：可以省略，用ts的类型推断
 function add(a: number, b: number): number {
   return a + b
 }
 // 声明变量的方式
-let add1 = function(a: number, b: number): number {
+let add1: (a: number, b: number) => number = function(a: number, b: number): number {
   return a + b
 }
 
 // 箭头函数的方式
-let add2 = (a: number, b: number): number => {
+let add2 = (a: number, b: number) => {
   return a + b
 }
 // 指定无返回值
@@ -47,9 +47,10 @@ console.log(add5(12))
 
 /**
  * 剩余参数
+ * 当参数个数不确定时使用
  */
-let add6 = function(a: number, b: number, ...rests: number[]): number {
-  return a + b + rests[0]
+let add6 = function(a: number, b: number, ...rest: number[]): number {
+  return a + b + rest[0]
 }
 console.log('add6', add6(1,2,3,4,5))
 
@@ -116,7 +117,7 @@ driveOrRide(new Bike())
 
 
 /**
- * 函数类型的定义方式:
+ * 函数的定义方式:
  * 1、any
  * 2、Function
  * 4、类型别名
@@ -158,6 +159,7 @@ let suits = ["hearts", "spades", "clubs", "diamonds"];
 function pickCard(x: {suit: string; card: number; }[]): number;
 function pickCard(x: number): {suit: string; card: number; };
 /**
+ * 检测函数，必须声明
  * 注意：这个函数并不是重载列表的一部分
  * 只有参数列表和返回值符合的调用才是有效的，以其它参数调用 pickCard会产生错误
  */
@@ -172,4 +174,5 @@ function pickCard(x): any {
   }
 }
 let pickedCard2 = pickCard(15);
+// pickCard('123'); // 会报错
 console.log(pickedCard2)
