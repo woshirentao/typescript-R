@@ -22,8 +22,10 @@ s(['2', 1, 12]);
  * 够支持当前的数据类型，同时也能够支持未来数据类型
  * 泛型：
  * 使返回值的类型与传入参数的类型是相同的，T 用来捕获用户传入的类型，之后就可以使用这个类型
- * 作用：泛型就是解决类、接口、方法的复用性以及对不特定类型的数据的支持
+ * 作用：使函数和类支持多种类型，而不用写复杂的函数重载和联合类型，增强代码可读性
+ * 灵活控制类型之间的约束
  */
+// 泛型函数，可以使用默认值（=）
 function identity(x) {
     return new Array().concat(x);
 }
@@ -38,8 +40,11 @@ identity([1, 2, '3']);
 function G1(arg) {
     return arg;
 }
-// 泛型类型：<U>(arg: U) => U
-var g = G1;
+/**
+ * 两种方式：
+ * 泛型类型：<U>(arg: U) => U
+ */
+var g = G1; // 一般用这个
 var gg = G1;
 function identity1(arg) {
     return arg;
@@ -54,7 +59,9 @@ var Person = /** @class */ (function () {
     return Person;
 }());
 var person = new Person('rentao', 23);
-// extends 在这里不是继承，而是用来 约束 泛型T的类型
+// 也可以不传递泛型参数
+var person1 = new Person('Jack', 10);
+// extends 在这里不是继承，而是用来 约束 T的类型，不再是随意的类型
 function loggingIdentity(arg) {
     console.log(arg);
     return arg;
@@ -70,8 +77,8 @@ var Animal = /** @class */ (function () {
 }());
 var Dog = /** @class */ (function (_super) {
     __extends(Dog, _super);
-    function Dog() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Dog(age) {
+        return _super.call(this) || this;
     }
     return Dog;
 }(Animal));
@@ -79,4 +86,5 @@ var Dog = /** @class */ (function (_super) {
 function createInstance(t) {
     return new t();
 }
-var dog = createInstance(Dog);
+// error：类型“typeof Dog”的参数不能赋给类型“new () => Dog”的参数
+// let dog: Dog = createInstance(Dog)
