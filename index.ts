@@ -128,7 +128,7 @@ console.log(room)
 let passcode = "secret passcode";
 
 class Employee1 {
-  private _fullName: string
+  private _fullName: string; // 私有属性一般以_开头
   get fullName(): string {
     return this._fullName
   }
@@ -166,23 +166,27 @@ console.log(Doom.getDoomName())
  * 抽象类:
  * 抽象类做为其它派生类的基类使用。它们不能被实例化。，只能被继承
  * 不同于接口，抽象类可以包含成员的实现细节。
- * 抽象方法的语法与接口方法相似，但是，抽象方法必须包含 abstract关键字并且可以包含访问修饰符（除private）
+ * 抽象方法的语法与接口相似，但是，抽象方法必须包含 abstract关键字并且可以包含访问修饰符（除private）
  * 使用抽象类可以实现类的多态
  */
 abstract class Animal {
-  name: string
-  age: number 
-  abstract greet(name?: string): void // 抽象方法必须在子类中实现
-  abstract height: string // 抽象属性，用的少
-  printName(): void {
-    console.log('Animal name: ' + this.name);
-  }
+  name: string;
+  age: number; 
+  abstract height: string; // 抽象属性，一般不用
+  abstract greet(name?: string): void; // 抽象方法必须在子类中实现
+  abstract greet1(name?: string): void; // 抽象方法必须在子类中实现
 }
 // let ani: Animal = new Animal() // 无法被实例化
 
+/**
+ * 继承类必须实现所有抽象类的抽象方法
+ */
 class Dog extends Animal {
   height: string
   greet(): void { // 实现抽象方法
+    console.log('狗在打招呼')
+  }
+  greet1(): void { // 实现抽象方法
     console.log('狗在打招呼')
   }
 }
@@ -190,6 +194,9 @@ class Cat extends Animal {
   height: string
   greet(): void {
     console.log('猫在打招呼')
+  }
+  greet1(): void { // 实现抽象方法
+    console.log('狗在打招呼')
   }
 }
 let dog: Dog = new Dog()
