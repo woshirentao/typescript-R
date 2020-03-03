@@ -1,10 +1,14 @@
 // 函数
-// 规定参数的类型，返回值类型
+// 规定参数的类型，返回值类型：可以省略，用ts的类型推断
 function add(a, b) {
     return a + b;
 }
-// 声明变量的方式
+// 函数表达式的方式
 var add1 = function (a, b) {
+    return a + b;
+};
+// 函数类型：(a: number, b: number) => number
+var addd = function (a, b) {
     return a + b;
 };
 // 箭头函数的方式
@@ -22,7 +26,7 @@ add(1, 2);
 /**
  * 默认值(=)
  * 有默认值的参数可以不指定类型，会自动指定类型
- * 注意：一般带有默认值的参数要放到参数列表的最后
+ * 注意：一般带有默认值的参数要放到参数列表的最后，可以不明确参数类型约束
  */
 var add4 = function (a, b) {
     if (b === void 0) { b = 12; }
@@ -33,7 +37,7 @@ add4(2);
 // add4(2, '')
 /**
  * 可选值(?)
- * 注意：一般可选的参数也要放到参数列表的最后
+ * 注意：一般可选的参数也要放到参数列表的最后，不能和默认值共用
  */
 var add5 = function (a, b) {
     return a + (b || 0);
@@ -41,13 +45,14 @@ var add5 = function (a, b) {
 console.log(add5(12));
 /**
  * 剩余参数
+ * 当参数个数不确定时使用
  */
 var add6 = function (a, b) {
-    var rests = [];
+    var rest = [];
     for (var _i = 2; _i < arguments.length; _i++) {
-        rests[_i - 2] = arguments[_i];
+        rest[_i - 2] = arguments[_i];
     }
-    return a + b + rests[0];
+    return a + b + rest[0];
 };
 console.log('add6', add6(1, 2, 3, 4, 5));
 /**
@@ -58,61 +63,7 @@ var add7 = function (value) {
 };
 console.log('add7', add7('我是任涛'));
 /**
- *
- */
-var Car = /** @class */ (function () {
-    function Car() {
-    }
-    Car.prototype.drive = function () {
-        console.log('正在开车');
-    };
-    return Car;
-}());
-var Bike = /** @class */ (function () {
-    function Bike() {
-    }
-    Bike.prototype.ride = function () {
-        console.log('正在骑车');
-    };
-    return Bike;
-}());
-// function driveOrRide(ver: Car | Bike) {
-//   if (ver.drive) {
-//     // ver.drive()  // 会编译报错，判断不出ver的类型
-//   }
-//   if ((ver as Bike).ride) { // 解决的第一种方法:断言
-//     (ver as Bike).ride()
-//   }
-// }
-/**
- * 第二种方式：用户自定义的类型保护
- */
-// 类型保护就是一些表达式，它们会在运行时检查以确保在某个作用域里的类型
-function isFish(ver) {
-    return ver.drive !== undefined;
-}
-// function driveOrRide(ver: Car | Bike) {
-//   if (isFish(ver)) {
-//     ver.drive()
-//   }else {
-//     ver.ride()
-//   }
-// }
-/**
- * 第三种方式: instanceof类型保护 或者 typeof类型保护
- * 最简便的方式，推荐使用
- */
-function driveOrRide(ver) {
-    if (ver instanceof Car) {
-        ver.drive();
-    }
-    else {
-        ver.ride();
-    }
-}
-driveOrRide(new Bike());
-/**
- * 函数类型的定义方式:
+ * 函数的定义方式:
  * 1、any
  * 2、Function
  * 4、类型别名
@@ -135,10 +86,15 @@ var obj = {
         //   let area = this.w * this.h // 此时this指向window
         //   console.log(area)
         // }
-        //解决办法：返回箭头函数,箭头函数能保存函数创建时的 this值，而不是调用时的值,默认情况下，编译器不会指出this的指向问题，给编译器设置了--noImplicitThis标记，会指出this的问题
+        /**
+         * 解决办法：
+         * 返回箭头函数,箭头函数能保存函数创建时的 this值，而不是调用时的值,
+         * 但是this的类型默认是any，any类型没有任何意义，即时调用不对，编译器也不会报错
+         * 默认情况下，编译器不会指出this的指向问题，给编译器设置了--noImplicitThis标记，会指出this的问题
+         * */
         return function () {
-            var area = _this.w * _this.h; // 此时this指向window
-            console.log(area);
+            // let area = this.w * this.g // this.g不会报错，导致类型检测没有意义了
+            console.log(_this);
         };
     }
 };
@@ -150,6 +106,7 @@ var area = areaFunc();
  */
 var suits = ["hearts", "spades", "clubs", "diamonds"];
 /**
+ * 检测函数，必须声明
  * 注意：这个函数并不是重载列表的一部分
  * 只有参数列表和返回值符合的调用才是有效的，以其它参数调用 pickCard会产生错误
  */
@@ -163,5 +120,7 @@ function pickCard(x) {
         return { suit: suits[pickedSuit], card: x % 13 };
     }
 }
+var myDeck = [{ suit: "diamonds", card: 2 }, { suit: "spades", card: 10 }, { suit: "hearts", card: 4 }];
+var pickedCard1 = myDeck[pickCard(myDeck)];
 var pickedCard2 = pickCard(15);
-console.log(pickedCard2);
+// pickCard('123'); // 会报错
