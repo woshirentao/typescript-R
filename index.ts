@@ -3,16 +3,21 @@ var a:number
 a = 10
 // 数组的定义
 {
-  // 第一种方式：类型+[]
+  // 第一种方式：类型[]
   let array: string[] = ['','132']
-  // 第二种方式是使用数组泛型
+  // 第二种方式是使用泛型
   let array1: Array<number> = [1,2,3]
-
 }
-// 元组的定义
+/**
+ * 元组的定义
+ * 跟数组类似，但是可以存放不同类型的值
+ * 注意：顺序必须对应
+ */
 {
   let a: [string, number] = ['12',23]
   console.log(a[0], a[1])
+  // 对于溢出部分，采用联合类型(string | number)
+  // a[2] = 2
 }
 // Object
 {
@@ -58,16 +63,17 @@ a = 10
  * 只能为它赋予undefined和null
  */
 {
-  function warnUser(): void {
-    console.log("This is my warning message");
-  }
+  // function warnUser(): void {
+  //   console.log("This is my warning message");
+  // }
   // let emptyValue: void = null
 
 }
 // null和undefined
 /**
  * undefined和null两者各自有自己的类型分别叫做undefined和null,但是只能为它赋予undefined和null
- * 默认情况下null和undefined是所有类型的子类型。除非加上--strictNullChecks,如：tsc --strictNullChecks index.ts
+ * 默认情况下null和undefined是所有类型的子类型，
+ * 如果不想把null和undefined赋给其他类型，除非加上--strictNullChecks,如：tsc --strictNullChecks index.ts
  * 尽可能地使用--strictNullChecks
  */
 {
@@ -75,11 +81,13 @@ a = 10
   // let b: null = 34
   let u: undefined = undefined;
   let n: null = null;
+  let a: number;
+  // a = null
   // 当--strictNullChecks和联合类型一起使用时，null可以传递
-  function strictNullChecks(value: string|null|undefined): void {
-    console.log("联合类型", value);
-  }
-  strictNullChecks(null)
+  // function strictNullChecks(value: string|null|undefined): void {
+  //   console.log("联合类型", value);
+  // }
+  // strictNullChecks(null)
 }
 
 /**

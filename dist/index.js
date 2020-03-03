@@ -4,15 +4,21 @@ var a;
 a = 10;
 // 数组的定义
 {
-    // 第一种方式：类型+[]
+    // 第一种方式：类型[]
     var array = ['', '132'];
-    // 第二种方式是使用数组泛型
+    // 第二种方式是使用泛型
     var array1 = [1, 2, 3];
 }
-// 元组的定义
+/**
+ * 元组的定义
+ * 跟数组类似，但是可以存放不同类型的值
+ * 注意：顺序必须对应
+ */
 {
     var a_1 = ['12', 23];
     console.log(a_1[0], a_1[1]);
+    // 对于溢出部分，采用联合类型(string | number)
+    // a[2] = 2
 }
 // Object
 {
@@ -57,15 +63,16 @@ a = 10;
  * 只能为它赋予undefined和null
  */
 {
-    function warnUser() {
-        console.log("This is my warning message");
-    }
+    // function warnUser(): void {
+    //   console.log("This is my warning message");
+    // }
     // let emptyValue: void = null
 }
 // null和undefined
 /**
  * undefined和null两者各自有自己的类型分别叫做undefined和null,但是只能为它赋予undefined和null
- * 默认情况下null和undefined是所有类型的子类型。除非加上--strictNullChecks,如：tsc --strictNullChecks index.ts
+ * 默认情况下null和undefined是所有类型的子类型，
+ * 如果不想把null和undefined赋给其他类型，除非加上--strictNullChecks,如：tsc --strictNullChecks index.ts
  * 尽可能地使用--strictNullChecks
  */
 {
@@ -73,11 +80,13 @@ a = 10;
     // let b: null = 34
     var u = undefined;
     var n = null;
+    var a_4;
+    // a = null
     // 当--strictNullChecks和联合类型一起使用时，null可以传递
-    function strictNullChecks(value) {
-        console.log("联合类型", value);
-    }
-    strictNullChecks(null);
+    // function strictNullChecks(value: string|null|undefined): void {
+    //   console.log("联合类型", value);
+    // }
+    // strictNullChecks(null)
 }
 /**
  * never类型: 表示的是那些永不存在的值的类型，如无限循环、抛出异常
@@ -108,27 +117,3 @@ var string = '23';
 var num = string.length;
 var num1 = string.length;
 console.log(num);
-/**
- * 高级类型
- */
-/**
- * 可以为null的类型：默认情况下null和undefined可以赋值给任何类型的变量
- * --strictNullChecks标记可以进行严格的null检查：当你声明一个变量时，它不会自动地包含 null或 undefined
- * 注意：使用了 --strictNullChecks，可选参数会被自动地加上 | undefined
- * 加 !后缀可以将一个变量的空值类型去掉
- */
-function f(x, y) {
-    return x + (y || 0);
-}
-function assertNever(x) {
-    console.log(x);
-    throw new Error("Unexpected object: " + x);
-}
-function area(s) {
-    switch (s.kind) {
-        case "square": return s.size * s.size;
-        case "rectangle": return s.height * s.width;
-        case "circle": return Math.PI * Math.pow(s.radius, 2);
-        default: return assertNever(s);
-    }
-}
