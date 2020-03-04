@@ -26,14 +26,17 @@ function identity<T = string>(x: T[]): T[] {
 identity<number>([1,2])
 identity([1,2,'3'])
 
-// 泛型类型的表示
+/**
+ * 泛型类型：
+ * 泛型函数
+ * 泛型接口
+ * 泛型类
+ */
+// 泛型函数
 function G1<T>(arg: T): T {
   return arg
 }
-/**
- * 两种方式：
- * 泛型类型：<U>(arg: U) => U
- */
+// 泛型函数的两种声明方式：
 let g: <U>(arg: U) => U = G1  // 一般用这个
 let gg: {<T>(arg: T): T} = G1
 
@@ -61,7 +64,7 @@ class Person<T, U> {
 }
 
 let person = new Person<string, number>('rentao', 23)
-// 也可以不传递泛型参数
+// 也可以不传递泛型参数，使用类型推导
 let person1 = new Person('Jack', 10)
 
 
@@ -69,7 +72,7 @@ let person1 = new Person('Jack', 10)
 interface Lengthwise {
   length: number;
 }
-// extends 在这里不是继承，而是用来 约束 T的类型，不再是随意的类型
+// extends 在这里不是继承，而是用来 约束 T的类型，不再是随意的类型，得符合Lengthwise结构
 function loggingIdentity<T extends Lengthwise>(arg: T): T {
   console.log(arg)
   return arg
@@ -87,9 +90,9 @@ class Dog extends Animal {
     super()
   }
 }
-// new ()=> T : 代表一个具有 无参 构造函数 的 类类型
+// new ()=> T : 代表一个具有 无参 构造函数 的 类类型T，也可以写成{new (): T}，也就是说t是个构造函数
+// <T extends Animal>：代表T需要具有Animal特征，也就是t构造函数必须返回Animal对象
 function createInstance<T extends Animal>(t: new ()=> T): T {
   return new t()
 }
-// error：类型“typeof Dog”的参数不能赋给类型“new () => Dog”的参数
-// let dog: Dog = createInstance(Dog)
+// let dog: Dog = createInstance(Dog) // error：类型“typeof Dog”的参数不能赋给类型“new () => Dog”的参数
