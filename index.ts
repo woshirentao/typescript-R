@@ -1,50 +1,71 @@
 /**
  * 接口：也叫类型检查器
  * 只能声明属性和方法，不能赋值与实现，跟抽象类类似
- * 对值所具有的结构进行类型检查,对得上才行
+ * 对值所具有的结构进行类型检查，完全对得上才行，不能多也不能少
  * 规定格式规范
  * 
- * 与类型别名type不同，接口可以重复声明，会合并在一起
- * 作用：1、作为类型检测
+ * 作用：
+ * 1、作为类型检测
  * 2、类可以实现接口
  * 
+ * 与类型别名不同：接口可以重复声明，会合并在一起
  * 与抽象类不同：不能包含访问修饰符，不能有成员方法的具体实现
  */
 
  interface Person {
-  //  name: string = '123', // 只能声明
+  //  name: string = '123', // 只能声明，不能初始化
    name: string
    age?: number // 可选类型
    // 定义方法：只是方法的定义，没有实现
-   print(name: string): void
+  //  print(name: string): void
  }
 
  function checkPerson(o: Person) {
-  o.print(o.name)
+  // o.print(o.name)
  }
-
+// 检测对象字面量
  checkPerson({
    age: 13,
    name: '任涛',
-   print(name: string): void {
-    console.log('对象定义方法')
-   }
+  //  print(name: string): void {
+  //   console.log('对象定义方法')
+  //  }
  })
-
+// 检测类实例
  class Persons {
    name: string = '默认名字'
-   print(name: string): void {
-     console.log('类定义方法')
-   }
+  //  print(name: string): void {
+  //    console.log('类定义方法')
+  //  }
  }
  checkPerson(new Persons())
-// 使用接口类型
-//  let a: Person = {
-//    name: ''
-//  }
+
+ /**
+  * 如何避开接口的检测？
+  */
+// 1、断言
+checkPerson({
+  name: 'rentao'
+} as Person)
+// 2、通过变量进行转换，只适用于多增加变量的情况
+checkPerson({
+  name: 'rentao',
+  // height: 100  这种情况，多一个就会报错
+})
+
+let obj = {
+  name: 'rentao',
+  height: 100
+}
+checkPerson(obj)
+// 3、索引签名：见下面可索引类型
+
+
+
 
 /**
- * 类实现接口:
+ * 类类型
+ * 类实现接口: implements关键字
  * 需要实现接口中的所有属性和方法，且必须是共有的
  */
 class Rentao implements Person {
@@ -66,9 +87,9 @@ class Rentao1 implements Person, Person3 {
 }
 
 // let rt: Rentao = new Rentao()
-// 也可以将变量声明为接口类型
+// 也可以将变量声明为接口类型，多态性
 let rt: Person = new Rentao()
-rt.print('')
+// rt.print('')
 
 /**
  * 函数类型
@@ -84,15 +105,6 @@ let p2: Person2 = function(soc: string, subStr: string): boolean {
 }
 // 当函数一样调用
 p2('hhhh', '123')
-
-// 断言与接口的使用
-let person = {} as Person
-// let person = <Person>{
-//   name: '第二种用法'
-// }
-person.name = '断言person' // 会报错，找不到name属性，需要使用断言告诉编译器
-console.log(person.name)
-
 
 
 /**
@@ -141,7 +153,7 @@ interface Button extends Components {
 // }
 
 /**
- * 可索引的类型:
+ * 可索引的类型
  * TypeScript支持两种索引签名：字符串和数字
  * 数字索引可以定义数组，但是并没有数组特有的方法和属性
  * 字符串索引可以定义对象
@@ -160,6 +172,10 @@ interface NumberArray {
 let array: NumberArray = ['1','2','3']
 console.log(array)
 
+let obb: NumberArray = {
+  0: '10',
+  1: '20'
+}
 // 使用：额外的属性检查
 interface Person1 {
   [propName: string]: any // 最佳的方式是添加一个字符串索引签名
