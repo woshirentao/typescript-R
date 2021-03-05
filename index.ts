@@ -1,7 +1,7 @@
 /**
  * 接口：也叫类型检查器，规定格式规范
  * 只能声明属性和方法，不能赋值与实现，跟抽象类类似
- * 对变量或者函数参数值、返回值所具有的结构进行类型检查，完全对得上才行，不能多也不能少
+ * 对变量或者函数参数值、返回值所具有的结构进行类型检查
  * 
  * 
  * 作用：
@@ -23,7 +23,7 @@
  function checkPerson(o: Person) {
   // o.print(o.name)
  }
-// 检测对象字面量
+// 检测对象字面量时，要完全对得上才行，不能多也不能少
  checkPerson({
    age: 13,
    name: '任涛',
@@ -31,14 +31,15 @@
   //   console.log('对象定义方法')
   //  }
  })
-// 检测类实例
+// 检测类实例时，可以多字段，但是不能少
  class Persons {
    name: string = '默认名字'
-  //  print(name: string): void {
-  //    console.log('类定义方法')
-  //  }
+   print(name: string): void {
+     console.log('类定义方法')
+   }
  }
- checkPerson(new Persons())
+ const p = new Persons()
+ checkPerson(p)
 
  /**
   * 如何避开接口的检测？
