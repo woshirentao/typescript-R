@@ -1,5 +1,5 @@
 /**
- * 接口：也叫类型检查器，规定格式规范
+ * 接口：也叫类型检查器，规定格式，约束规范
  * 只能声明属性和方法，不能赋值与实现，跟抽象类类似
  * 对变量或者函数参数值、返回值所具有的结构进行类型检查
  * 
@@ -14,13 +14,15 @@
 
  interface Person {
   //  name: string = '123', // 只能声明，不能初始化
-   name: string
-   age?: number // 可选类型
+   readonly name: string // 只读属性
+   age?: number // 可选属性
    // 定义方法：只是方法的定义，没有实现
   //  print(name: string): void
  }
 
  function checkPerson(o: Person) {
+  //  o.name = '' // 不能修改，只读的
+  // o.mamam = 123 // 不能添加属性
   // o.print(o.name)
  }
 // 检测对象字面量时，要完全对得上才行，不能多也不能少
@@ -51,7 +53,7 @@ checkPerson({
 // 2、通过变量进行转换，只适用于多增加变量的情况
 checkPerson({
   name: 'rentao',
-  // height: 100  这种情况，多一个就会报错
+  // height: 100  // 这种情况，多一个就会报错
 })
 
 let obj = {
@@ -65,14 +67,15 @@ checkPerson(obj)
 
 
 /**
- * 类类型
- * 类实现接口: implements关键字
+ * 类类型：使一个类符合一种约定
+ * 方式：类实现接口(implements关键字)
  * 需要实现接口中的所有属性和方法，且必须是共有的
  */
 class Rentao implements Person {
   name: string = '类实现了接口'
+  age: number
   print(name: string): void {
-    console.log(this.name)
+    console.log('打印：' + this.name)
   }
 }
 // 可以实现多个接口
@@ -93,7 +96,7 @@ let rt: Person = new Rentao()
 // rt.print('')
 
 /**
- * 函数类型
+ * 函数类型：也是一种类型规范，需要借助接口才能实现
  * 可以理解为声明了一个匿名函数类型
  */
 interface Person2 {
