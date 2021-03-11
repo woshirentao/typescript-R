@@ -1,19 +1,20 @@
-// 函数
-// 规定参数的类型，返回值类型：可以省略，用ts的类型推断
+// 函数：封装一段重复使用的代码
+// 规定参数的类型，返回值类型：
+// 注意：返回值类型可以省略（可以类型推断）
 
 function add(a: number, b: number): number {
   return a + b
 }
-// 函数表达式的方式
+// 函数表达式(匿名函数)的方式
 let add1 = function(a: number, b: number): number {
   return a + b
 }
-// 函数类型：(a: number, b: number) => number
+// 完整写法：规定函数类型为(a: number, b: number) => number
 let addd: (a: number, b: number) => number = function(a: number, b: number): number {
   return a + b
 }
 // 箭头函数的方式
-let add2 = (a: number, b: number) => {
+let add2 = (a: number, b: number): number => {
   return a + b
 }
 // 指定无返回值
@@ -69,11 +70,12 @@ let add7 = function(value: number|string) {
 console.log('add7', add7('我是任涛'))
 
 /**
+ * 总结：
  * 函数的定义方式:
  * 1、any
  * 2、Function
  * 4、类型别名
- * 5、函数类型接口
+ * 5、函数类型-接口
  */
 // 3、
 let func: (name: string) => boolean = function(name: string): boolean {
@@ -114,7 +116,7 @@ let area = areaFunc();
  * this在回调函数中的问题:
  * this不会指向document对象，需要提供一个显式的 this参数
  */
-document.onclick = obj.callback;
+// document.onclick = obj.callback;
 
 /**
  * 函数重载：
